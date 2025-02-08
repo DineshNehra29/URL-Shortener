@@ -13,7 +13,7 @@ A simple URL shortener built using **Go** that generates shortened URLs and redi
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/your-username/url-shortener.git
+git clone https://github.com/DineshNehra29/URL-Shortener.git
 
 ```
 
