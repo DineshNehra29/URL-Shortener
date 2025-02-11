@@ -46,11 +46,26 @@ func getURL(id string) (URL, error) {
 	return url, nil
 }
 
+func enableCORS(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*") // Allow all origins
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
 func RootPageURL(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	fmt.Fprint(w, "Welcome to the URL Shortener!")
 }
 
 func ShortURLHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
+
+	// Handle preflight request
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	var data struct {
 		URL string `json:"url"`
 	}
@@ -72,11 +87,13 @@ func ShortURLHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func redirectURLHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
+
 	id := r.URL.Path[len("/redirect/"):]
 	url, err := getURL(id)
 	if err != nil {
 		http.Error(w, "Invalid request", http.StatusNotFound)
-		return // Ensure early return
+		return
 	}
 	http.Redirect(w, r, url.OriginalURL, http.StatusFound)
 }
