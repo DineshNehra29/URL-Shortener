@@ -35,10 +35,10 @@
   main {
     font-family: 'Helvetica Neue', sans-serif;
     text-align: center;
-    padding: 50px;
-    background: linear-gradient(135deg, #e09, #d0e);
+    background:  black;
     color: #333;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: auto;
   }
 
   input[type='text'] {
@@ -124,10 +124,17 @@
   .link-list a:hover {
     text-decoration: underline;
   }
+
+  h1 {
+  text-shadow: 2px 0px 10px rgb(6, 193, 240);
+  font-size: 3em;
+  color: white;
+  }
+
 </style>
 
 <main>
-  <h1 style="font-size: 3em; color: #4A00E0; text-shadow: 2px 2px #FF8C00;">✂️ URL Shortener ✨</h1>
+  <h1> URL Shortener </h1>
 
   <input type="text" bind:value={url} placeholder="Enter a URL..." />
   <button on:click={shortenURL} disabled={loading}>Shorten</button>
@@ -141,7 +148,7 @@
   {/if}
 
   {#if shortUrl}
-    <p>Shortened URL: <a href={shortUrl} target="_blank">{shortUrl}</a></p>
+    <p style="color: white; font-size: 1em;">Shortened URL: <a href={shortUrl} target="_blank">{shortUrl}</a></p>
   {/if}
 
   {#if previousLinks.length > 0}
@@ -150,11 +157,11 @@
       <ul>
         {#each previousLinks as link}
           <li>
-            <a href={link.original} target="_blank">{link.original}</a> →
-            <a href={link.short} target="_blank">{link.short}</a>
+            Orignal : <a href={link.original} target="_blank">{link.original}</a> <br>
+            Shortened : <a href={link.short} target="_blank">{link.short}</a>
           </li>
         {/each}
       </ul>
     </div>
   {/if}
-</main>
+  </main>
